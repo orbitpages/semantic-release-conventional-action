@@ -1,0 +1,23 @@
+name: Test Action
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, edited]
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: release
+        uses: ./

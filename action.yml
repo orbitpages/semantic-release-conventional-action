@@ -1,0 +1,56 @@
+name: "semantic-release-action"
+description: "A GitHub action for package release workflow with semantic-release and conventionalcommits"
+author: Orbit Team (https://github.com/orbitpages/)
+branding:
+  color: orange
+  icon: file-text
+runs:
+  using: composite
+  steps:
+    - uses: "actions/setup-node@v2"
+      with:
+        node-version: "16.x"
+
+    - name: "Install semantic-release"
+      shell: bash
+      run: npm install -g semantic-release conventional-changelog-conventionalcommits @semantic-release/exec
+
+    - name: "Generate release"
+      shell: bash
+      run: npx semantic-release
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+
+    - name: Set Release Version to Env
+      uses: actions/github-script@v5
+      with:
+        script: |
+          const fs = require("fs");
+          const filePath = "./version";
+
+          try {
+            fs.accessSync(filePath, fs.constants.F_OK,)
+          } catch (e) {
+            core.warning(e)
+            return;
+          }
+
+          const version = fs
+            .readFileSync(filePath, "utf8")
+            .toString()
+            .replace("\n", "")
+            .replace("{", "")
+            .replace("}", "")
+            .split(",");
+
+          for (const type of version) {
+            const [name, value] = type.split(":");
+            const variableName = `SEMANTIC_RELEASE_${name.toUpperCase()}`;
+
+            core.exportVariable(variableName, value);
+            core.notice(`${variableName} was exported to env with value: ${value}`)
+          }
+
+    - name: Clean up
+      shell: bash
+      run: git stash
