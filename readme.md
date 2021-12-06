@@ -1,4 +1,4 @@
-# semantic-release-action
+# semantic-release-conventional-action
 
 A GitHub action for package release workflow with [semantic-release](https://github.com/semantic-release/semantic-release) and [conventionalcommits](https://www.conventionalcommits.org/pt-br/)
 
@@ -12,6 +12,9 @@ permissions:
 
 - name: Release Package
   uses: orbitpages/semantic-release-action@main
+  env:
+    GITHUB_TOKEN: ${{ github.token }}
+    NPM_TOKEN: ${{ github.token }}
 ```
 
 Add file `.releaserc` at root repository with semantic-release configuration

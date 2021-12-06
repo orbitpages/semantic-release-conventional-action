@@ -1,4 +1,4 @@
-name: "semantic-release-action"
+name: "semantic-release-conventional-action"
 description: "A GitHub action for package release workflow with semantic-release and conventionalcommits"
 author: Orbit Team (https://github.com/orbitpages/)
 branding:
