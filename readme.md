@@ -11,7 +11,7 @@ permissions:
   pull-requests: write
 
 - name: Release Package
-  uses: orbitpages/semantic-release-action@main
+  uses: orbitpages/semantic-release-conventional-action@main
   env:
     GITHUB_TOKEN: ${{ github.token }}
     NPM_TOKEN: ${{ github.token }}
