@@ -20,6 +20,7 @@
       {
         "verifyReleaseCmd": "echo ${JSON.stringify(nextRelease)} > version"
       }
-    ]
+    ],
+    "@semantic-release/git"
   ]
 }
